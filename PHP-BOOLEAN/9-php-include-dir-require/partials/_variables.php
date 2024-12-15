@@ -1,0 +1,2 @@
+<?php
+$primaryColor = '#ffac33';

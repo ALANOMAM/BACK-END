@@ -1,0 +1,32 @@
+header {
+    padding-top: 2em;
+
+    text-align: center;
+
+    .logo {
+        width: 150px;
+
+        margin-bottom: 2em;
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+
+        list-style-type: none;
+
+        li {
+            padding:  8px 16px; 
+
+            &.active {
+                background-color: $primary;
+            }
+
+            a {
+                text-decoration: none;
+                color: black!important;
+            }
+        }
+    }
+}
+

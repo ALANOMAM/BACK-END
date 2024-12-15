@@ -1,0 +1,93 @@
+1. Selezionare il voto più basso dato ad ogni appello d'esame
+SELECT MIN(`vote`), `exam_id`
+FROM `exam_student`
+GROUP BY `exam_id`;
+
+--- Per ottenere il nome del corso a cui fa riferimento l'esame collegato alla tabella exams
+SELECT MIN(`vote`), `exam_id`, courses.name
+FROM `exam_student` INNER JOIN `exams`
+ON exam_id = exams.id
+INNER JOIN courses
+ON exams.course_id = courses.id
+GROUP BY `exam_id`;
+--- questa query ha un collegamento tra 3 tabelle:
+    "exam_student" è collegata ad "exams", che è collegata a "courses"
+
+ 2. Calcolare la media dei voti di ogni appello d'esame
+
+SELECT AVG(vote), exam_id, exams.date
+FROM `exam_student`
+INNER JOIN exams
+ON exam_student.exam_id = exams.id
+GROUP BY exam_id;
+
+
+3. Contare quanti corsi di laurea ci sono per ogni dipartimento
+
+SELECT department_id, COUNT(degrees.id) AS 'Numero', departments.name
+FROM `degrees`
+INNER JOIN departments
+ON degrees.department_id = departments.id
+GROUP BY department_id;   
+
+4. Selezionare il voto medio di superamento d'esame per ogni corso, con anche i dati
+del corso di laurea associato, ordinati per media voto decrescente
+
+SELECT AVG(vote), courses.*
+
+FROM `exam_student`
+INNER JOIN exams
+ON exam_student.exam_id = exams.id
+INNER JOIN courses
+ON exams.course_id = courses.id
+INNER JOIN degrees
+ON courses.degree_id = degrees.id
+
+WHERE exam_student.vote >= 18
+
+GROUP BY courses.id  
+ORDER BY `AVG(vote)`  ASC
+
+5. Selezionare tutti i docenti che insegnano nel Dipartimento di
+Matematica (54)
+
+SELECT teachers.*, departments.name
+FROM `teachers` 
+INNER JOIN course_teacher
+ON teachers.id = course_teacher.teacher_id
+INNER JOIN courses
+ON course_teacher.course_id = courses.id
+INNER JOIN degrees
+ON courses.degree_id = degrees.id
+INNER JOIN departments
+ON degrees.department_id = departments.id
+WHERE departments.id = 5  
+GROUP BY teachers.id
+ORDER BY `teachers`.`surname` ASC;
+
+6. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
+per ogni esame, stampando anche il voto massimo. Successivamente,
+filtrare i tentativi con voto minimo 18.
+
+6.1
+SELECT students.name, students.surname, COUNT(courses.id) AS 'tentativi', courses.name AS 'corso', MAX(exam_student.vote) AS 'voto_massimo'
+FROM `students`
+INNER JOIN exam_student
+ON students.id = exam_student.student_id 
+INNER JOIN exams
+ON exam_student.exam_id = exams.id
+INNER JOIN courses
+ON exams.course_id = courses.id
+GROUP BY students.id, exams.course_id;
+
+6.2
+SELECT students.name, students.surname, COUNT(courses.id) AS 'tentativi', courses.name AS 'corso', MAX(exam_student.vote) AS 'voto_massimo'
+FROM `students`
+INNER JOIN exam_student
+ON students.id = exam_student.student_id 
+INNER JOIN exams
+ON exam_student.exam_id = exams.id
+INNER JOIN courses
+ON exams.course_id = courses.id
+WHERE exam_student.vote >= 18
+GROUP BY students.id, exams.course_id;

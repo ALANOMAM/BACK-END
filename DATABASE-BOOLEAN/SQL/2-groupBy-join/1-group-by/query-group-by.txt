@@ -1,0 +1,43 @@
+1. Contare i corsi raggruppati per cfu
+SELECT `cfu`, COUNT(`id`) AS 'numero'
+FROM `courses`
+GROUP BY `cfu`;
+
+2. Contare gli studenti raggruppati per anno di nascita
+SELECT YEAR(`date_of_birth`), COUNT(`id`) AS 'numero'
+FROM `students`
+GROUP BY YEAR(`date_of_birth`);
+
+
+
+3. Contare gli appelli d'esame del mese di luglio raggruppati per giorno
+
+SELECT DATE(`date`) AS 'Giorno', COUNT(`id`) AS 'Numero di appelli' 
+FROM `exams` 
+WHERE MONTH(`date`) = 7 
+GROUP BY DATE(`date`);
+
+
+4. Contare quanti iscritti ci sono stati ogni anno
+
+SELECT COUNT(`id`) AS 'numero di iscritti', YEAR(`enrolment_date`) AS 'anno di iscrizione' 
+FROM `students` 
+GROUP BY YEAR(`enrolment_date`);
+
+
+
+5. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+
+SELECT `office_address`, COUNT(`id`) AS 'numero di insegnanti'
+FROM `teachers` 
+GROUP BY `office_address`;
+
+
+
+
+
+
+
+
+
+

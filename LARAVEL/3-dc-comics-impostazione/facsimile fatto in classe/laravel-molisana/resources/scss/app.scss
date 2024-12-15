@@ -1,0 +1,68 @@
+@use './partials/variables' as *;
+
+@import "~bootstrap/scss/bootstrap";
+
+@import './partials/header';
+
+
+main {
+    padding: 24px 0;
+
+    background-image: url('../img/fondo-pag-speciali.jpg');
+
+    h2 {
+        color: $primary-dark;
+        text-transform: uppercase;
+    }
+}
+
+.pasta-type {
+    margin-bottom: 16px;
+}
+#pasta-list {
+    display: flex;
+    flex-flow: wrap;
+    gap: 6px;
+    
+
+    .pasta {
+
+        width: calc(100% / 3 - 6px / 3 * 2);
+
+        background-color: white;
+        padding: 16px;
+
+        text-decoration: none;
+
+        .pasta-img {
+            width: 100%;
+        }
+
+        .pasta-title {
+            color: gray!important;
+
+            font-size: 14px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+    }
+}
+
+
+
+#single-product {
+
+    header {
+        text-align: center;
+
+        img {
+            width: 300px;
+        }
+    }
+
+    p {
+        color: $primary-dark;
+    }
+
+
+}
